@@ -17,9 +17,9 @@ let tryGetEnv = System.Environment.GetEnvironmentVariable >> function null | "" 
 let publicPath = Path.GetFullPath "../Client/public"
 let port = "SERVER_PORT" |> tryGetEnv |> Option.map uint16 |> Option.defaultValue 8085us
 
-let getInitCounter () : Task<Counter> = task { return { Value = 42 } }
+let getInitCounter () : Task<Model> = task { return { Hello = "BOB"} }
 let webApp =
-    route "/api/init" >=>
+    route Route.hello >=>
         fun next ctx ->
             task {
                 let! counter = getInitCounter()
@@ -33,11 +33,11 @@ let configureApp (app : IApplicationBuilder) =
 
 let configureServices (services : IServiceCollection) =
     services.AddGiraffe() |> ignore
-    services.AddSingleton<Giraffe.Serialization.Json.IJsonSerializer>(Thoth.Json.Giraffe.ThothSerializer()) |> ignore
+    services.AddSingleton<Serialization.Json.IJsonSerializer>(Thoth.Json.Giraffe.ThothSerializer()) |> ignore
 WebHost
     .CreateDefaultBuilder()
-    .UseWebRoot(publicPath)
-    .UseContentRoot(publicPath)
+    .UseWebRoot(".")
+    .UseContentRoot(".")
     .Configure(Action<IApplicationBuilder> configureApp)
     .ConfigureServices(configureServices)
     .UseUrls("http://0.0.0.0:" + port.ToString() + "/")

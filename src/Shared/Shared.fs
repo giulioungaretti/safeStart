@@ -1,4 +1,8 @@
 namespace Shared
 
-type Counter = { Value : int }
+type Model = { Hello: string }
+
+
+module Route =
+    let hello = "/api/hello"
 

@@ -6,7 +6,7 @@
             "type": "coreclr",
             "request": "launch",
             "preLaunchTask": "Build Server",
-            "program": "${workspaceFolder}/src/Server/bin/Debug/netcoreapp2.2/Server.dll",
+            "program": "${workspaceFolder}/src/Server/bin/Debug/netcoreapp3.1/Server.dll",
             "args": [],
             "logging": {
                 "moduleLoad": false
@@ -16,7 +16,7 @@
         },
         {
             "name": "Debug Client",
-            "type": "chrome",
+            "type": "edge",
             "request": "launch",
             "preLaunchTask": "Watch Client",
             "url": "http://localhost:8080",
@@ -28,7 +28,7 @@
         },
         {
             "name": "Watch SAFE App",
-            "type": "chrome",
+            "type": "edge",
             "request": "launch",
             "preLaunchTask": "Watch Client and Server",
             "url": "http://localhost:8080",

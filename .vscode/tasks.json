@@ -48,11 +48,10 @@
     },
     {
       "label": "Watch Client",
-      "command": "fake",
-      "args": ["build", "-t", "Run"],
+      "command": "dotnet",
+      "args": ["fake", "build", "-t", "Run"],
       "type": "shell",
       "options": {
-        "cwd": "${workspaceFolder}",
         "env": {
           "vsCodeSession": "true",
           "safeClientOnly": "true"
