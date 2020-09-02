@@ -9,11 +9,11 @@ open Fable.React.Props
 open Shared
 
 
-type Msg = GotHello of string
+type Msg = GotHello of Result<Model,FetchError>
 
 let init () =
-    let model: Model = { Hello = "" }
-    let getHello () = Fetch.get<unit, string> Route.hello
+    let model: Model = { Hello = "hello client" }
+    let getHello () = Fetch.tryGet<_, Model> Route.hello
 
     let cmd =
         Cmd.OfPromise.perform getHello () GotHello
@@ -22,7 +22,12 @@ let init () =
 
 let update msg model =
     match msg with
-    | GotHello hello -> { model with Hello = hello }, Cmd.none
+    | GotHello hello ->
+        match hello with
+        | Ok s -> { model with Hello = s.Hello }, Cmd.none
+        | Error e ->
+            { model with Hello = e.ToString()}, Cmd.none
+
 
 
 let view model dispatch =

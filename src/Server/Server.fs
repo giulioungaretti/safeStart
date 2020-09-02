@@ -17,12 +17,13 @@ let tryGetEnv = System.Environment.GetEnvironmentVariable >> function null | "" 
 let publicPath = Path.GetFullPath "../Client/public"
 let port = "SERVER_PORT" |> tryGetEnv |> Option.map uint16 |> Option.defaultValue 8085us
 
-let getInitCounter () : Task<Model> = task { return { Hello = "BOB"} }
+let getInitCounter () : Task<Model> = task { return { Hello = "Server"} }
 let webApp =
     route Route.hello >=>
         fun next ctx ->
             task {
                 let! counter = getInitCounter()
+                do! Async.Sleep 500
                 return! Successful.OK counter next ctx
             }
 
